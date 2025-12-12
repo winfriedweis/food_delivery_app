@@ -3,9 +3,9 @@ import "./globals.css"
 
 export default function Index() {
   return (
-      <View className="flex-1 items-center justify-center bg-green-100">
-          <Text className="text-xl font-bold text-red-100">
-              Welcome to Nativewind!
+      <View className="flex-1 items-center justify-center bg-white">
+          <Text className="text-xl font-bold text-blue-500">
+              Welcome to my Food Application!
           </Text>
       </View>
   );
