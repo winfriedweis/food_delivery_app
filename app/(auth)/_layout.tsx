@@ -1,12 +1,33 @@
-import {View, Text} from 'react-native'
+import {View, Text, KeyboardAvoidingView, Platform, ScrollView, Dimensions} from 'react-native'
 import {SafeAreaView} from "react-native-safe-area-context";
 import {Slot} from "expo-router";
+import {images} from "@/constants";
+import {ImageBackground} from "@/components/ExpoImageBackground";
+import {Image} from "@/components/ExpoImage";
+import CustomInput from "@/components/CustomInput";
+import CustomButton from "@/components/CustomButton";
 
+// Keyboard Avoiding View for keeping the keyboard below the text field
 export default function _Layout() {
     return (
-        <SafeAreaView>
-            <Text>Auth Layout</Text>
+        <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'height' : 'padding'}>
+            <ScrollView className="bg-white h-full" keyboardShouldPersistTaps={"handled"}>
+                <View className="w-full relative" style={{height: Dimensions.get("screen").height / 2.25}}>
+                    <ImageBackground source={images.loginGraphic} className="size-full rounded-b-lg"
+                                     contentFit="cover"/>
+                    <Image source={images.logo} className="self-center size-48 absolute -bottom-16 z-10"/>
+                </View>
+                <CustomInput
+                    placeholder="Enter your email"
+                    value={""}
+                    onChangeText={(text) => {
+                    }}
+                    label="Email"
+                    keyboardType="email-address"
+                />
+                <CustomButton/>
+            </ScrollView>
             <Slot/>
-        </SafeAreaView>
+        </KeyboardAvoidingView>
     )
 }
