@@ -10,24 +10,17 @@ import CustomButton from "@/components/CustomButton";
 // Keyboard Avoiding View for keeping the keyboard below the text field
 export default function _Layout() {
     return (
-        <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'height' : 'padding'}>
+        <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'height' : 'padding'}
+                              keyboardVerticalOffset={4}
+        >
             <ScrollView className="bg-white h-full" keyboardShouldPersistTaps={"handled"}>
                 <View className="w-full relative" style={{height: Dimensions.get("screen").height / 2.25}}>
                     <ImageBackground source={images.loginGraphic} className="size-full rounded-b-lg"
                                      contentFit="cover"/>
                     <Image source={images.logo} className="self-center size-48 absolute -bottom-16 z-10"/>
                 </View>
-                <CustomInput
-                    placeholder="Enter your email"
-                    value={""}
-                    onChangeText={(text) => {
-                    }}
-                    label="Email"
-                    keyboardType="email-address"
-                />
-                <CustomButton/>
+                <Slot/>
             </ScrollView>
-            <Slot/>
         </KeyboardAvoidingView>
     )
 }
