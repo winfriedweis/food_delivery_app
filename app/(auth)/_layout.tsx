@@ -11,9 +11,13 @@ import useAuthStore from "@/store/auth.store";
 // Keyboard Avoiding View for keeping the keyboard below the text field
 export default function AuthLayout() {
 
-    const {isAuthenticated} = useAuthStore();
+    const {isAuthenticated, isLoading} = useAuthStore();
 
-    if (isAuthenticated) return < Redirect href="/"/>
+    if (isLoading) {
+        return null;  // todo oder eine Loading-UI
+    }
+
+    if (isAuthenticated) return < Redirect href="/(tabs)"/>
 
     return (
         <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'height' : 'padding'}

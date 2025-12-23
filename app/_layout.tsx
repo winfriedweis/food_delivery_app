@@ -59,8 +59,18 @@ export default Sentry.wrap(function RootLayout() {
     }, [fontsLoaded, error]);
 
     // Promise returned from fetchAuthenticatedUser is ignored -> no Problem its just for state change though.
+    // Mit try-catch und delay
     useEffect(() => {
-        fetchAuthenticatedUser()
+        const checkAuth = async () => {
+            try {
+                await fetchAuthenticatedUser();
+            } catch (e) {
+                console.log("Initial auth check failed:", e);
+                // Falls Fehler → einfach unauthentifiziert lassen
+            }
+        };
+
+        checkAuth();
     }, []);
 
     if (!fontsLoaded || isLoading) return null;

@@ -5,10 +5,12 @@ import CustomButton from "@/components/CustomButton";
 import {useState} from "react";
 import {signInWithEmail} from "@/lib/appwrite";
 import * as Sentry from "@sentry/react-native";
+import useAuthStore from "@/store/auth.store";
 
 const SignIn = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [form, setForm] = useState({email: "", password: ""});
+    const {fetchAuthenticatedUser} = useAuthStore();
 
     const submit = async () => {
         // Destructure Email and Password for not repeating myself
@@ -18,9 +20,19 @@ const SignIn = () => {
         if (!email || !password) return Alert.alert("Error", "Please enter a valid email & password ");
         setIsSubmitting(true);
         try {
+            // STEP 1: Anmelden
             await signInWithEmail({email, password});
-            router.replace("/");
+            console.log("✅ Session created!");
+
+            // STEP 2: State aktualisieren
+            await fetchAuthenticatedUser();
+            console.log("✅ User state updated!");
+
+            // STEP 3: Navigieren (JETZT funktioniert es!)
+            router.replace("/(tabs)");  // ← Das ist der Hauptroute!
+
         } catch (error: any) {
+            console.error("❌ Sign in failed:", error);
             Sentry.captureEvent(error);
             Alert.alert("Error", error.message);
         } finally {

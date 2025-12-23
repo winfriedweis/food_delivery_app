@@ -1,5 +1,4 @@
-import {Account, Avatars, Client, ID} from "react-native-appwrite";
-import {TablesDB} from "react-native-appwrite";
+import {Account, Avatars, Client, ID, TablesDB} from "react-native-appwrite";
 import {CreateUserParams, User} from "@/type";
 
 export const appwriteConfig = {
@@ -129,15 +128,21 @@ export const signInWithEmail = async ({
 // Hinter async() Promise hinzugefügt
 // const userRow bekommt Typen "as User"
 
-export const getCurrentUser = async (): Promise<User> => {
-    const currentAccount = await account.get();
+export const getCurrentUser = async (): Promise<User | null> => {
+    try {
+        const currentAccount = await account.get();
 
-    // Mit rowId - Query's sind outdated
-    const userRow = await tablesDB.getRow({
-        databaseId: appwriteConfig.databaseId,
-        tableId: appwriteConfig.userTableId,
-        rowId: currentAccount.$id
-    }) as User;
+        const userRow = await tablesDB.getRow({
+            databaseId: appwriteConfig.databaseId,
+            tableId: appwriteConfig.userTableId,
+            rowId: currentAccount.$id
+        }) as User;
 
-    return userRow;
+        return userRow;
+    } catch (error: any) {
+        // Damit wird guest session graceful gehandelt todo remove log
+        console.log("[getCurrentUser] Not authenticated (this is expected):", error.message);
+        return null;
+    }
 }
+
