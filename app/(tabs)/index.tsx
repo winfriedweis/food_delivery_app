@@ -17,6 +17,7 @@ import {Image} from "@/components/ExpoImage";
 // Utility für das bedingte zusammenstellen von Klassen sonst offer-card zb. doppelt
 import cn from 'clsx';
 import CartButton from "@/components/CartButton";
+import useAuthStore from "@/store/auth.store";
 
 // export default ist der Hauptexport dieser Datei und automatisch Route app/index.tsx = /
 // Komponenten sind Funktionen die JSX zurückgeben - Javascript + XML also kein gültiges JS
@@ -32,6 +33,12 @@ Das eigentliche Objekt das React versteht
 */
 
 export default function Index() {
+
+    // Console log check for current user - todo remove
+    /*---------------------------------------------------*/
+    const {user} = useAuthStore();
+    console.log("User: ", JSON.stringify(user, null, 2));
+    /*---------------------------------------------------*/
     return (
         <SafeAreaView className="flex-1 bg-white">
             {/*

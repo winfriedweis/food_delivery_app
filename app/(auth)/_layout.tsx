@@ -1,14 +1,20 @@
 import {View, Text, KeyboardAvoidingView, Platform, ScrollView, Dimensions} from 'react-native'
 import {SafeAreaView} from "react-native-safe-area-context";
-import {Slot} from "expo-router";
+import {Redirect, Slot} from "expo-router";
 import {images} from "@/constants";
 import {ImageBackground} from "@/components/ExpoImageBackground";
 import {Image} from "@/components/ExpoImage";
 import CustomInput from "@/components/CustomInput";
 import CustomButton from "@/components/CustomButton";
+import useAuthStore from "@/store/auth.store";
 
 // Keyboard Avoiding View for keeping the keyboard below the text field
-export default function _Layout() {
+export default function AuthLayout() {
+
+    const {isAuthenticated} = useAuthStore();
+
+    if (isAuthenticated) return < Redirect href="/"/>
+
     return (
         <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'height' : 'padding'}
                               keyboardVerticalOffset={4}

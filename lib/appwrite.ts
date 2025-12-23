@@ -1,6 +1,6 @@
 import {Account, Avatars, Client, ID} from "react-native-appwrite";
 import {TablesDB} from "react-native-appwrite";
-import {CreateUserParams} from "@/type";
+import {CreateUserParams, User} from "@/type";
 
 export const appwriteConfig = {
     endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT!,
@@ -126,7 +126,10 @@ export const signInWithEmail = async ({
     }
 }
 
-export const getCurrentUser = async () => {
+// Hinter async() Promise hinzugefügt
+// const userRow bekommt Typen "as User"
+
+export const getCurrentUser = async (): Promise<User> => {
     const currentAccount = await account.get();
 
     // Mit rowId - Query's sind outdated
@@ -134,10 +137,7 @@ export const getCurrentUser = async () => {
         databaseId: appwriteConfig.databaseId,
         tableId: appwriteConfig.userTableId,
         rowId: currentAccount.$id
-    });
+    }) as User;
 
-    return {
-        account: currentAccount,
-        user: userRow
-    };
+    return userRow;
 }
