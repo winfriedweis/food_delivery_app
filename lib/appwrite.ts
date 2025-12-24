@@ -6,7 +6,12 @@ export const appwriteConfig = {
     projectId: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID!,
     platform: "com.winfriedweis.fooddeliveryapp",
     databaseId: "693fe308003869df3b88",
-    userTableId: "user"
+    bucketId: "694c1331003296039623",
+    userTableId: "user",
+    categoriesTableId: "categories",
+    menuCollectionId: "menu",
+    customizationsCollectionId: "customizations",
+    menuCustomizationsCollectionId: "menu_customizations"
 }
 
 export const client = new Client();
