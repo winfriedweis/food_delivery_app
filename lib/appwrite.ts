@@ -9,9 +9,9 @@ export const appwriteConfig = {
     bucketId: "694c1331003296039623",
     userTableId: "user",
     categoriesTableId: "categories",
-    menuCollectionId: "menu",
-    customizationsCollectionId: "customizations",
-    menuCustomizationsCollectionId: "menu_customizations"
+    menuTableId: "menu",
+    menuCustomizationsTableId: "menu_customizations",
+    customizationsTableId: "customizations"
 }
 
 export const client = new Client();
